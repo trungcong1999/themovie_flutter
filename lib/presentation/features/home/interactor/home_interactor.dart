@@ -1,5 +1,3 @@
-
-
 import '../../../../data/models/movie_result.dart';
 
 abstract class HomeInteractor {

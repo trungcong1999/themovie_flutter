@@ -15,3 +15,5 @@ class LoadDataMovies extends HomeEvent {
   @override
   List<Object> get props => [page];
 }
+
+class LoadMoreDataMovies extends HomeEvent {}

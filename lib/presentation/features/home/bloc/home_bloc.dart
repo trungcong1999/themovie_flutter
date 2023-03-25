@@ -20,7 +20,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   Future<void> _onLoadDataMovies(
       LoadDataMovies event, Emitter<HomeState> emit) async {
     try {
-      emit(HomeLoading());
       final movies = await interactor.getMovies(page: event.page);
       emit(HomeSuccess(movies));
       page = event.page;

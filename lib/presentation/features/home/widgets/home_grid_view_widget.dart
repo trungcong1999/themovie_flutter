@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:movie_flutter/data/models/movie_result.dart';
+import 'package:movie_flutter/presentation/widgets/loading_widget.dart';
 
 import '../home_constant.dart';
 import 'home_card_widget.dart';
 
 class HomeGridViewWidget extends StatelessWidget {
-  const HomeGridViewWidget({super.key, required this.movies, required this.scrollController});
+  const HomeGridViewWidget(
+      {super.key, required this.movies, required this.scrollController});
 
   final List<MovieResult> movies;
   final ScrollController scrollController;
@@ -26,6 +28,9 @@ class HomeGridViewWidget extends StatelessWidget {
         itemCount: movies.length,
         itemBuilder: (context, index) {
           final data = movies[index];
+          if (index == movies.length) {
+            return const LoadingWidget();
+          }
           return HomeCardWidget(movieResult: data);
         },
       ),

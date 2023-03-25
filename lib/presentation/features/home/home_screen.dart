@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_flutter/data/models/movie_result.dart';
 import 'package:movie_flutter/presentation/features/home/home_constant.dart';
 import 'package:movie_flutter/presentation/features/home/widgets/home_grid_view_widget.dart';
-import 'package:movie_flutter/presentation/widgets/loading_widget.dart';
 
 import 'bloc/home_bloc.dart';
 
@@ -14,11 +13,23 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen>
-    with AutomaticKeepAliveClientMixin {
+class _HomeScreenState extends State<HomeScreen> {
   HomeBloc get bloc => BlocProvider.of<HomeBloc>(context);
   final _scrollController = ScrollController();
   List<MovieResult> _movies = [];
+  bool isLoading = false;
+
+  bool isScrollReachedToEnd() {
+    return _scrollController.position.maxScrollExtent >
+            _scrollController.offset &&
+        _scrollController.position.maxScrollExtent - _scrollController.offset <=
+            50;
+  }
+
+  bool isScrollReachedToTop() {
+    return _scrollController.position.atEdge &&
+        _scrollController.position.pixels == 0;
+  }
 
   @override
   void initState() {
@@ -29,7 +40,6 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return Scaffold(
         backgroundColor: HomeConstant.kWhite,
         appBar: AppBar(
@@ -95,8 +105,6 @@ class _HomeScreenState extends State<HomeScreen>
                     return Center(
                       child: Text(state.error),
                     );
-                  } else if (state is HomeLoading) {
-                    return const LoadingWidget();
                   } else {
                     return const SizedBox.shrink();
                   }
@@ -108,10 +116,11 @@ class _HomeScreenState extends State<HomeScreen>
   }
 
   void _onScroll() {
-    if (_scrollController.offset >=
-            _scrollController.position.maxScrollExtent &&
-        !_scrollController.position.outOfRange) {
-      bloc.add(LoadDataMovies(page: bloc.page + 1));
+    if (isScrollReachedToTop()) {
+      bloc.page = 1;
+    } else if (isScrollReachedToEnd()) {
+      bloc.page++;
+      bloc.add(LoadDataMovies(page: bloc.page));
     }
   }
 
@@ -121,7 +130,4 @@ class _HomeScreenState extends State<HomeScreen>
     _scrollController.dispose();
     super.dispose();
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }

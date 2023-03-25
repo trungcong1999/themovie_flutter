@@ -4,7 +4,7 @@ class HomeConstant {
   static const urlImage = 'https://image.tmdb.org/t/p/w500/';
   static const kWhite = Color(0xFFFFFFFF);
   static const kBlack = Color(0xFF000000);
-  static const kPaddingAllIn = EdgeInsets.all(16.0);
+  static const kPaddingAllIn = EdgeInsets.fromLTRB(16.0, 2.0, 16.0, 2.0);
   static const kSize2 = 2;
   static const kSize3 = 3.0;
   static const kSize5 = 5.0;
@@ -33,5 +33,4 @@ class HomeConstant {
       Color(0xffca485c),
     ],
   );
-  
 }

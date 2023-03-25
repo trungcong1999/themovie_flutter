@@ -15,9 +15,5 @@ void main() {
     await Injection.inject();
 
     runApp(const MyApp());
-  }, (obj, StackTrace stack) {
-    LogUtils.d(' ------ main.dart ------');
-    LogUtils.d(obj);
-    LogUtils.d(stack);
-  });
+  }, (obj, StackTrace stack) {});
 }
