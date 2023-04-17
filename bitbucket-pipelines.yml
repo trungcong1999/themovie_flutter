@@ -1,0 +1,12 @@
+# Setting up Bitbucket Pipelines
+pipelines:
+  default:
+    - step:
+        name: Run Flutter Tests
+        image: cirrusci/flutter:stable
+        caches:
+          - flutter
+        script:
+          - flutter pub get
+          - flutter analyze
+          - flutter test

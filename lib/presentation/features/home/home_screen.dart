@@ -1,3 +1,11 @@
+/*
+ * Copyright (c) 2023 Hoàng Trung Công <https://github.com/trungcong1999>
+ * 
+ * Created Date: Tuesday, 18th April 2023 1:12:13 am
+ * Author: Hoàng Trung Công
+ * 
+ */
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_flutter/data/models/movie_result.dart';
@@ -119,8 +127,9 @@ class _HomeScreenState extends State<HomeScreen> {
     if (isScrollReachedToTop()) {
       bloc.page = 1;
     } else if (isScrollReachedToEnd()) {
-      bloc.page++;
+      bloc.page = bloc.page + 1;
       bloc.add(LoadDataMovies(page: bloc.page));
+    
     }
   }
 
